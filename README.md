@@ -49,6 +49,29 @@ ORDER BY f.obs_date DESC, c.city_name;
 Run `python etl.py` twice: the second run should show `inserted=0` (or only a
 few `updated`) in the `merge` log row, which proves the load is incremental.
 
+## Screenshots
+
+Successful pipeline run in the terminal:
+
+![ETL run completed successfully](docs/screenshots/etl-run-success.png)
+
+SQL Server load log after the first successful load:
+
+![ETL load log showing successful extract, validate, stage, and merge steps](docs/screenshots/etl-load-log-first-run.png)
+
+Load log after rerunning the pipeline, showing the idempotent merge:
+
+![ETL load log showing a rerun with no inserted or updated rows](docs/screenshots/etl-load-log-idempotent-rerun.png)
+
+Sample rows returned from the weather fact table:
+
+![Weather fact table query results](docs/screenshots/weather-fact-query.png)
+
+Troubleshooting history showing an initial missing-procedure error followed by
+successful runs:
+
+![Initial SQL Server procedure error and subsequent successful ETL runs](docs/screenshots/troubleshooting-and-reruns.png)
+
 ## Scheduling (Windows Task Scheduler)
 
 Create a Basic Task -> Daily -> Start a program -> `run_etl.bat`.
