@@ -1,4 +1,6 @@
-# Automated Weather ETL Pipeline (Python + SQL Server)
+# weather_ETL
+
+## Automated Weather ETL Pipeline (Python + SQL Server)
 
 An automated ETL pipeline that pulls daily weather data for five South Indian
 cities from the free [Open-Meteo](https://open-meteo.com/) API, validates it in
