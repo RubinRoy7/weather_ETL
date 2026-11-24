@@ -83,7 +83,7 @@ IF OBJECT_ID('etl.load_log', 'U') IS NULL
 CREATE TABLE etl.load_log (
     log_id         INT IDENTITY(1,1) PRIMARY KEY,
     batch_id       UNIQUEIDENTIFIER NOT NULL,
-    step           NVARCHAR(50)     NOT NULL,   -- extract / validate / stage / merge
+    step           NVARCHAR(50)     NOT NULL,   -- weather and air-quality ETL steps
     status         NVARCHAR(20)     NOT NULL,   -- SUCCESS / FAILED
     rows_affected  INT              NULL,
     message        NVARCHAR(1000)   NULL,
