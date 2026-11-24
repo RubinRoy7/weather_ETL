@@ -138,11 +138,14 @@ def validate(df):
 # 3. Stage  &  4. Merge
 # --------------------------------------------------------------------------
 def load_staging(conn, batch_id, df):
+    rows = [(batch_id,) + r for r in to_rows(
+        df, ["city_name", "obs_date", "temp_max_c", "temp_min_c", "precip_mm"])]
+    if not rows:
+        raise ValueError("No valid rows to stage: all rows were rejected by validation")
+
     cur = conn.cursor()
     cur.fast_executemany = True
     cur.execute("TRUNCATE TABLE staging.weather_daily")
-    rows = [(batch_id,) + r for r in to_rows(
-        df, ["city_name", "obs_date", "temp_max_c", "temp_min_c", "precip_mm"])]
     cur.executemany(
         "INSERT INTO staging.weather_daily "
         "(batch_id, city_name, obs_date, temp_max_c, temp_min_c, precip_mm) "
