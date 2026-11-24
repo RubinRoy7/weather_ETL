@@ -111,6 +111,16 @@ successful runs:
 
 ![Initial SQL Server procedure error and subsequent successful ETL runs](docs/screenshots/troubleshooting-and-reruns.png)
 
+Additional run evidence from 2026-11-24:
+
+![ETL batch completed successfully](docs/screenshots/2026-11-24-etl-run-success.png)
+
+![Weather load log showing an idempotent rerun](docs/screenshots/2026-11-24-weather-load-log-idempotent-rerun.png)
+
+![Latest weather load log and 45-row fact table count](docs/screenshots/2026-11-24-weather-load-log-fact-count.png)
+
+![Rejected weather rows from the validation test](docs/screenshots/2026-11-24-validation-rejected-rows.png)
+
 ## Scheduling (Windows Task Scheduler)
 
 Create a Basic Task -> Daily -> Start a program -> `run_etl.bat`.
