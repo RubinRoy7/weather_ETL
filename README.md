@@ -9,6 +9,8 @@ incremental `MERGE` upserts. Air-quality readings are hourly in staging and
 aggregated into daily PM10, PM2.5, and US AQI metrics. Every run is logged, and
 invalid rows are quarantined.
 
+**Stack:** Python, pandas, requests, pyodbc, SQL Server, and T-SQL.
+
 ## Architecture
 
 ```
@@ -34,15 +36,39 @@ Monitoring: etl.load_log; weather and air-quality rejected-row tables
 - **Error handling:** transaction + `TRY...CATCH` in T-SQL, errors re-thrown with `THROW`; script exits non-zero on failure.
 - **Automation:** `run_etl.bat` scheduled with Windows Task Scheduler.
 
+## Engineering skills demonstrated
+
+- Integrating external REST APIs and handling structured time-series data.
+- Validating and quarantining bad records with reasons and batch-level logging.
+- Modeling staging and fact tables, then maintaining them with idempotent SQL Server `MERGE` procedures.
+- Aggregating hourly air-quality readings into daily analytics and a joined view.
+- Testing validation behavior with focused Python unit tests.
+
 ## Setup
 
 1. Install SQL Server (Express is fine), SSMS, and the *ODBC Driver 17 (or 18) for SQL Server*.
 2. Run `sql/01_schema.sql`, `sql/02_proc_merge_weather.sql`, and
    `sql/03_air_quality.sql` in SSMS, in that order.
-3. `pip install -r requirements.txt`
-4. Set the server name if it is not `localhost\SQLEXPRESS`:
-   `set SQL_SERVER=YOUR-PC\SQLEXPRESS` (and `SQL_DRIVER` if you use Driver 18).
+3. Create a virtual environment and install dependencies:
+
+   ```powershell
+   python -m venv .venv
+   .venv\Scripts\Activate.ps1
+   python -m pip install -r requirements.txt
+   ```
+
+4. If the SQL Server name is not `localhost\SQLEXPRESS`, set `SQL_SERVER` in
+   your terminal (and `SQL_DRIVER` if you use Driver 18):
+
+   ```powershell
+   $env:SQL_SERVER = "YOUR-PC\SQLEXPRESS"
+   # Optional when using ODBC Driver 18:
+   $env:SQL_DRIVER = "ODBC Driver 18 for SQL Server"
+   ```
+
 5. `python etl.py`
+
+Run the focused tests with `python -m unittest discover -v`.
 
 ## Check the results
 

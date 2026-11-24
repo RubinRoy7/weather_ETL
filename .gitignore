@@ -1,6 +1,25 @@
+# Python
 __pycache__/
-*.pyc
-logs/
-.env
-.vscode/
+*.py[cod]
 .venv/
+venv/
+
+# Local configuration and run output
+.env
+.env.*
+!.env.example
+logs/
+*.log
+
+# Test and tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
